@@ -15,4 +15,4 @@ const userModel = new mongoose.Schema({
  lastName:{type:String}
 })
 
-const user= mongoose.model("User",userModel)
+export const User= mongoose.model<UserType>("User",userModel)
