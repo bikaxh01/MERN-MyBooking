@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from 'mongoose'
+import router from './Routes/users'
 
 
 mongoose.connect(process.env.DB_URL as string).then(()=>{
@@ -16,10 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-
-app.get("/", async (req: Request, res: Response) => {
-  res.json("Running");
-});
+app.use('/api/v1/user',router)
 
 app.listen(process.env.PORT, () =>
   console.log(`Server is Running At ${process.env.PORT}`)
