@@ -21,6 +21,8 @@ router.post(
       return res.status(400).json({ message: validationError.array() });
     }
     try {
+      console.log("req came");
+      
       let user = await User.findOne({
         email: req.body.email,
       });
@@ -40,13 +42,13 @@ router.post(
         { expiresIn: "1d" }
       );
 
-      res.cookie("auth_toke", token, {
+      res.cookie("auth_token", token, {
         httpOnly: true,
         secure: true,
         maxAge: 86400000,
       });
       res.status(200).json({
-        message: "Ok",
+        message: "Account created successfully...",
       });
     } catch (error) {
       console.log(error);
@@ -64,38 +66,45 @@ router.post(
     check("password", "Password is require"),
   ],
   async (req: Request, res: Response) => {
+    const validateInput = validationResult(req);
+    if (!validateInput.isEmpty()) {
+      return res.status(400).json({ message: validateInput.array() });
+    }
     const { email, password } = req.body;
+    try {
+      const user = await User.findOne({ email });
 
-    const user = await User.findOne({ email });
+      if (!user) {
+        return res.status(404).json({
+          message: "Invalid user",
+        });
+      }
 
-    if (!user) {
-      return res.status(404).json({
-        message: "Invalid user",
+      const isMatch = await bcrypt.compare(password, user.password);
+
+      if (!isMatch) {
+        return res.status(400).json({
+          message: "Invalid Password",
+        });
+      }
+
+      const token = jwt.sign(user.password, process.env.JWT_KEY as string);
+
+      // Set the cookie
+      res.cookie("auth_token", token, {
+        httpOnly: true,
+        secure: true,
+      });
+
+      // Send the JSON response
+      res.status(200).json({
+        message: "Successfully logged in...",
+      });
+    } catch (error) {
+      res.status(400).json({
+        message: "Something went wrong...",
       });
     }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
-
-      return res.status(400).json({
-        message: "Invalid Password",
-      });
-    }
-
-    const token = jwt.sign(password, process.env.JWT_KEY as string);
-
- // Set the cookie
-res.cookie("auth_token", token, {
-    httpOnly: true,
-    secure: true,
-  });
-  
-  // Send the JSON response
-  res.status(200).json({
-    message: "Successfully logged in...",
-  });
-  
   }
 );
 

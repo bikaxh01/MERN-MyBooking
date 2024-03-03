@@ -1,6 +1,6 @@
-import React from "react";
 import Layout from "./layout/Layout";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -15,21 +15,14 @@ function App() {
           }
         />
         <Route
-          path="/search"
+          path="/register"
           element={
             <Layout>
-              <p>Hello Search Page</p>
-            </Layout>
+            <Register/>
+          </Layout>
           }
         />
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <p>Hello World</p>
-            </Layout>
-          }
-        />
+         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
