@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import { log } from "console";
+import { validateToken } from "../Middleware/auth";
 
 router.post(
   "/register",
@@ -21,7 +22,6 @@ router.post(
       return res.status(400).json({ message: validationError.array() });
     }
     try {
-      console.log("req came");
       
       let user = await User.findOne({
         email: req.body.email,
@@ -34,6 +34,7 @@ router.post(
       }
 
       user = new User(req.body);
+
       await user.save();
 
       const token = jwt.sign(
@@ -107,5 +108,30 @@ router.post(
     }
   }
 );
+
+
+router.get('/validate-token',validateToken,(req:Request,res:Response)=>{
+
+  res.status(200).send({userId:req.userId})
+})
+
+
+router.post('/sign-out',(req:Request,res:Response)=>{
+  res.cookie("auth_token", "", {
+    expires: new Date(0),
+  });
+  res.json({
+    message:"LoggeOut Success"
+  });
+})
+
+
+
+
+
+
+
+
+
 
 export default router;

@@ -1,5 +1,8 @@
 import { useForm } from "react-hook-form";
-import {registerUser} from './register.api'
+import * as apirequest from './api_request'
+import { useMutation, useQueries, useQueryClient } from "react-query";
+import { useAppContext } from "../context/app.context";
+import { useNavigate } from "react-router-dom";
 
 export type InputValidation = {
   firstName: string;
@@ -9,11 +12,24 @@ export type InputValidation = {
   confirmPassword: string;
 };
 function Register() {
+  const navigate =  useNavigate()
+  const {showToast}=useAppContext()
+  const queryClient = useQueryClient()
+
   const { register, watch, handleSubmit, formState:{errors} } = useForm<InputValidation>();
 
-  const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    registerUser(data)
+  const mutation= useMutation(apirequest.registerUser,{
+    onSuccess:async ()=>{
+     showToast({message:"Account Created..!",type:"Success"});
+     await queryClient.invalidateQueries("validateToken")
+     navigate('/')
+    },
+    onError:(error:Error)=>{
+      showToast({message:error.message,type:"Error"})
+    }
+  })
+  const onSubmit = handleSubmit((data) => {    
+    mutation.mutate(data)
   });
 
   return (
