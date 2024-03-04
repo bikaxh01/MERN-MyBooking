@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 import * as apirequest from './api_request'
-import { useMutation, useQueries, useQueryClient } from "react-query";
+import { useMutation,useQueryClient } from "react-query";
 import { useAppContext } from "../context/app.context";
 import { useNavigate } from "react-router-dom";
 

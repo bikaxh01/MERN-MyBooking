@@ -13,7 +13,7 @@ function SignOut() {
       showToast({ message: "User Logged Out", type: "Success" });
       navigate("/");
     },
-    onError: async (error: Error) => {
+    onError: async () => {
       console.log("Error occured");
       showToast({ message: "Error Occured", type: "Error" });
     },
