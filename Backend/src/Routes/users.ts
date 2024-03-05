@@ -4,7 +4,6 @@ const router = express.Router();
 import jwt from "jsonwebtoken";
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
-import { log } from "console";
 import { validateToken } from "../Middleware/auth";
 
 router.post(
@@ -22,7 +21,6 @@ router.post(
       return res.status(400).json({ message: validationError.array() });
     }
     try {
-      
       let user = await User.findOne({
         email: req.body.email,
       });
@@ -109,29 +107,17 @@ router.post(
   }
 );
 
+router.get("/validate-token", validateToken, (req: Request, res: Response) => {
+  res.status(200).send({ userId: req.userId });
+});
 
-router.get('/validate-token',validateToken,(req:Request,res:Response)=>{
-
-  res.status(200).send({userId:req.userId})
-})
-
-
-router.post('/sign-out',(req:Request,res:Response)=>{
+router.post("/sign-out", (req: Request, res: Response) => {
   res.cookie("auth_token", "", {
     expires: new Date(0),
   });
   res.json({
-    message:"LoggeOut Success"
+    message: "LoggeOut Success",
   });
-})
-
-
-
-
-
-
-
-
-
+});
 
 export default router;

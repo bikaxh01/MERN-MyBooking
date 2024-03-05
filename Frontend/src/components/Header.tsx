@@ -13,8 +13,8 @@ function Header() {
         <span className=" flex space-x-2">
           {isLoggin ? (
             <>
-              <Link to="/my-bookings"> MY BOOKING</Link>
-              <Link to="/my-hotels">MY HOTTELS</Link>
+              <Link to="/my-bookings" className=" font-bold text-white p-2 hover:bg-blue-500"> My Booking</Link>
+              <Link to="/my-hotels" className=" font-bold text-white p-2 hover:bg-blue-500">My Hotels</Link>
               <SignOut/>
             </>
           ) : (

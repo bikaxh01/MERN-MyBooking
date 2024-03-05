@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "react-query";
 import * as apiClient from "../pages/api_request.ts";
 import { useAppContext } from "../context/app.context";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export type SignInFromData = {
   email: string;
@@ -67,6 +67,7 @@ function SignIn() {
           <span className=" text-red-500">{errors.password?.message}</span>
         )}
       </label>
+      <p>Not registered? <Link to="/register" className=" font-bold underline"> Create account here</Link></p>
       <br />
       <button className=" rounded-2xl bg-blue-600 text-white p-2 font-bold hover:bg-blue-500 text-xl">
         Sign In
