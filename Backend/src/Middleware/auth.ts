@@ -16,7 +16,7 @@ export const validateToken = (
   next: NextFunction
 ) => {
   const token = req.cookies["auth_token"];
-
+  
   if (!token) {
     return res.status(401).json({
         message:"Invalid User"

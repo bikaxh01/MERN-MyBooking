@@ -6,6 +6,7 @@ import { validateToken } from "../Middleware/auth"
 
 const storage = multer.memoryStorage()
 const upload= multer({
+    
     storage:storage,
     limits:{
         fileSize:5*1024*1024 // 5MB
@@ -14,13 +15,14 @@ const upload= multer({
 
 const router= express.Router()
 
-router.post('/',upload.array("imageFile",6),validateToken,async (req:Request,res:Response)=>{
+router.post('/',validateToken,upload.array("imageFile",6),async (req:Request,res:Response)=>{
 try {
     // getting imaegs from request
     const imageFile= req.files as Express.Multer.File[]
 
     const hotelDetail:Hotel= req.body;
-
+   
+   
     // upload images to cloudinary
     const uploadToCloud = imageFile.map(async(image)=>{
       const bs64= Buffer.from(image.buffer).toString("base64");

@@ -1,4 +1,3 @@
-import { NumericType } from "mongodb";
 import mongoose from "mongoose";
 
 export type Hotel = {
@@ -44,7 +43,7 @@ const hotelSchema = new mongoose.Schema<Hotel>({
   childCount: {
     type: Number,
   },
-  facilities: [{ type: String, require: true }],
+  facilities: [{ type:String }],
   pricePerNight: {
     type: String,
   },

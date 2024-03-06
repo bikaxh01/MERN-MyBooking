@@ -66,3 +66,23 @@ export const signOut= async()=>{
   
   return resBody
 }
+
+export const addHotel= async (hotelFromData:FormData)=>{
+
+  for (const pair of hotelFromData.entries()) {
+    console.log(pair[0], pair[1]);
+  }
+  
+  const response= await fetch(`${API_BASE_URL}/api/v1/hotel`,{
+    method:"POST",
+    credentials:"include",
+    body:hotelFromData,
+  })
+
+  if(!response.ok){ 
+    throw new Error ("Error While Creating Hotel")
+  }
+
+  return response.json()
+
+}
