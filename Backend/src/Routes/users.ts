@@ -87,7 +87,7 @@ router.post(
         });
       }
 
-      const token = jwt.sign(user.password, process.env.JWT_KEY as string);
+      const token = jwt.sign({userId:user.id}, process.env.JWT_KEY as string);
 
       // Set the cookie
       res.cookie("auth_token", token, {

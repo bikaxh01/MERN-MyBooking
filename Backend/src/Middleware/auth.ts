@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import { ExpressValidator } from "express-validator";
 import jwt, { JwtPayload } from "jsonwebtoken";
 
 declare global {
@@ -31,8 +30,13 @@ export const validateToken = (
         message:"Invalid User"
     });
     }
+    
+    
 
-    req.userId = (verifyToken as JwtPayload).userId;
+
+    req.userId = (verifyToken as JwtPayload).userId; 
+    
+    
     next()
   } catch (error) {
     return res.status(401).json({

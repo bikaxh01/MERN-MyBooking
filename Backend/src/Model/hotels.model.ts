@@ -34,6 +34,9 @@ const hotelSchema = new mongoose.Schema<Hotel>({
   description: {
     type: String,
   },
+  userId:{
+    type:String
+  },
   type: {
     type: String,
   },

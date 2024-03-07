@@ -3,6 +3,7 @@ import multer from 'multer'
 import cloudinary from 'cloudinary'
 import { Hotel } from "../Model/hotels.model"
 import { validateToken } from "../Middleware/auth"
+import { log } from "console"
 
 const storage = multer.memoryStorage()
 const upload= multer({
@@ -36,7 +37,8 @@ try {
     hotelDetail.images=imageURl;
     hotelDetail.lastUpdated= new Date();
     hotelDetail.userId= req.userId
-
+   
+   
     // store URL of image to DB
 
     const hotel = new Hotel (hotelDetail)

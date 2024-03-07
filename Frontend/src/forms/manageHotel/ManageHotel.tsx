@@ -43,7 +43,7 @@ function ManageHotelForm({ onSave, isLoading }: Props) {
     formData.append("starRatting", data.starRatting.toString());
     formData.append("type", data.type);
 
-    data.facilities.forEach((item, index) =>
+    data.facilities.forEach((item) =>
       formData.append('facilities',item)
     );
     Array.from(data.images).forEach((img) => formData.append(`imageFile`, img));
