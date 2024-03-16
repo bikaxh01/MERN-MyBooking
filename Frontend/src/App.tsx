@@ -4,9 +4,11 @@ import Register from "./pages/Register";
 import SignIn from "./pages/SignIn";
 import Add_Hotel from "./pages/Add_Hotel";
 import { useAppContext } from "./context/app.context";
+import MyHotels from "./pages/MyHotels";
 
 function App() {
-  const {isLoggin} = useAppContext()
+  const { isLoggin } = useAppContext();
+
   return (
     <BrowserRouter>
       <Routes>
@@ -14,7 +16,7 @@ function App() {
           path="/"
           element={
             <Layout>
-              <p>Hello World</p>
+              <p>Home</p>
             </Layout>
           }
         />
@@ -22,28 +24,39 @@ function App() {
           path="/register"
           element={
             <Layout>
-            <Register/>
-          </Layout>
+              <Register />
+            </Layout>
           }
         />
         <Route
           path="/sign-in"
           element={
             <Layout>
-            <SignIn/>
-          </Layout>
+              <SignIn />
+            </Layout>
           }
         />
-        {
-          isLoggin && <>
-          <Route path="/add-hotel" element={
-            <Layout>
-              <Add_Hotel/>
-            </Layout>
-          }></Route>
+        {isLoggin && (
+          <>
+            <Route
+              path="/add-hotel"
+              element={
+                <Layout>
+                  <Add_Hotel />
+                </Layout>
+              }
+            ></Route>
+            <Route
+              path="/my-hotels"
+              element={
+                <Layout>
+                  <MyHotels />
+                </Layout>
+              }
+            ></Route>
           </>
-        }
-         <Route path="*" element={<Navigate to="/" />} />
+        )}
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
